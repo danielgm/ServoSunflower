@@ -18,8 +18,6 @@ bool isSearching;
 int index, highestReading, highestReadingIndex;
 
 void setup() {
-  Serial.begin(9600);
-  
   pinMode(1, OUTPUT);
   panServo.attach(14); // Analog pin 0.
 	tiltServo.attach(15); // Analog pin 1.
@@ -41,16 +39,6 @@ void loop() {
 		if (reading > highestReading) {
 			highestReading = reading;
 			highestReadingIndex = index;
-
-			int pan = floor(index / TILT_STEPS);
-			int tilt = index % TILT_STEPS;
-			if (pan % 2 == 1) {
-				tilt = TILT_STEPS - tilt - 1;
-			}
-			Serial.println("New high found at position " + String(index));
-			Serial.println("Value: " + String(reading));
-			Serial.println("Pan: " + String(map(pan, 0, PAN_STEPS, PAN_MIN, PAN_MAX)));
-			Serial.println("Tilt: " + String(map(tilt, 0, TILT_STEPS, TILT_MIN, TILT_MAX)));
 		}
 
 		index++;
